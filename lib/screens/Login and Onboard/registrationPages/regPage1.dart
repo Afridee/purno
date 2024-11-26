@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../constants/themecolors.dart';
+import '../../../constants/themecolors.dart';
 import 'regPage2.dart';
 
 class CreateAccountPage1 extends StatelessWidget {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:purnomerchant/constants/themecolors.dart';
-import 'package:purnomerchant/screens/loginScreen.dart';
-import 'package:purnomerchant/screens/registrationPages/regPage1.dart';
+import 'package:purnomerchant/screens/Login%20and%20Onboard/registrationPages/regPage1.dart';
+
+import 'loginScreen.dart';
 
 class IntroPage extends StatelessWidget {
   @override

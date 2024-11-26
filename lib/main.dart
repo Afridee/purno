@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:purnomerchant/screens/introPage.dart';
+import 'package:purnomerchant/screens/Inventory/products.dart';
+import 'package:purnomerchant/screens/Login%20and%20Onboard/introPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: IntroPage(),
+      home: InventoryProducts(),
     );
   }
 }
