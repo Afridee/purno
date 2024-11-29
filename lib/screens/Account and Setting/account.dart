@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -85,8 +86,13 @@ class AccountState extends State<Account> {
                   children: [
                     // Upload Photo Button
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async{
                         // Upload photo action
+                        /// Get the base url:
+                        final FirebaseFirestore firestore = FirebaseFirestore.instance;
+                        DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await firestore.collection('baseurl').doc('baseurl').get();
+                        String baseUrlValue = documentSnapshot.data()?['baseurl'] ?? 'No data found';
+                        print(baseUrlValue);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.purple,

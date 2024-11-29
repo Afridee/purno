@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "661972065953",
+    "project_id": "purno-7e189",
+    "storage_bucket": "purno-7e189.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661972065953:android:398e4f10e05c5990719ae0",
+        "android_client_info": {
+          "package_name": "com.example.purnomerchant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8Q8RozZX5hcwT8En29UN0y3OixfIN1TM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

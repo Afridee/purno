@@ -3,10 +3,15 @@ import 'package:purnomerchant/screens/Account%20and%20Setting/setting.dart';
 import 'package:purnomerchant/screens/Cart/Cart.dart';
 import 'package:purnomerchant/screens/Inventory/products.dart';
 import 'package:purnomerchant/screens/Login%20and%20Onboard/introPage.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'screens/Account and Setting/account.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
