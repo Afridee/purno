@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
 import '../../constants/themecolors.dart';
 import '../../services/authService.dart';
-import 'registrationPages/regPage1.dart';
-
+import 'createAccountandShopSetup/regPage1.dart';
 class OtpScreen extends StatelessWidget {
   OtpScreen({super.key});
 

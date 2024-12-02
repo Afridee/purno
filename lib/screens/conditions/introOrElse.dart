@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:purnomerchant/screens/Login%20and%20Onboard/introPage.dart';
-import 'package:purnomerchant/screens/Login%20and%20Onboard/loginScreen.dart';
-import 'package:purnomerchant/screens/Login%20and%20Onboard/registrationPages/regPage1.dart';
-
 import '../../services/authService.dart';
+import '../Login and Onboard/createAccountandShopSetup/regPage1.dart';
 
 class IntroOrElse extends StatefulWidget {
   const IntroOrElse({Key? key}) : super(key: key);
