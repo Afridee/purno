@@ -76,29 +76,29 @@ class IntroPage extends StatelessWidget {
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),
-                SizedBox(height: 10),
+                //SizedBox(height: 10),
                 // Registration Button
-                OutlinedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => CreateAccountPage1(),
-                      ),
-                    );
-                  },
-                  style: OutlinedButton.styleFrom(
-                    primary: Colors.purple,
-                    minimumSize: Size(double.infinity, 50),
-                    side: BorderSide(color: Colors.purple),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Text(
-                    'Registration',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
+                // OutlinedButton(
+                //   onPressed: () {
+                //     Navigator.of(context).push(
+                //       MaterialPageRoute(
+                //         builder: (context) => CreateAccountPage1(),
+                //       ),
+                //     );
+                //   },
+                //   style: OutlinedButton.styleFrom(
+                //     primary: Colors.purple,
+                //     minimumSize: Size(double.infinity, 50),
+                //     side: BorderSide(color: Colors.purple),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //   ),
+                //   child: Text(
+                //     'Registration',
+                //     style: TextStyle(fontSize: 18),
+                //   ),
+                // ),
                 SizedBox(height: 30),
               ],
             ),
