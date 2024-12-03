@@ -1,6 +1,6 @@
 import 'customer.dart'; // Assuming the Customer model is in this file
 
-class Order {
+class CustomerOrder {
   final String orderId;
   final double totalAmount;
   final String status; // e.g., "Fulfilled", "Pending", "Returned"
@@ -19,7 +19,7 @@ class Order {
   final double transactionFee;
   final double netPayable;
 
-  Order({
+  CustomerOrder({
     required this.orderId,
     required this.totalAmount,
     required this.status,
@@ -40,8 +40,8 @@ class Order {
   });
 
   // Convert JSON to Order object
-  factory Order.fromJson(Map<String, dynamic> json) {
-    return Order(
+  factory CustomerOrder.fromJson(Map<String, dynamic> json) {
+    return CustomerOrder(
       orderId: json['orderId'],
       totalAmount: json['totalAmount'].toDouble(),
       status: json['status'],
