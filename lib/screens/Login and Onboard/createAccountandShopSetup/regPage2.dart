@@ -36,7 +36,7 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             // Handle back action
           },
@@ -46,7 +46,7 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
             onPressed: () {
               // Handle skip action
             },
-            child: Text(
+            child: const Text(
               'Skip',
               style: TextStyle(color: Colors.purple, fontSize: 16),
             ),
@@ -58,10 +58,10 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Title
-            Text(
+            const Text(
               'Shop setup',
               style: TextStyle(
                 fontSize: 24,
@@ -69,7 +69,7 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Subtitle
             Text(
@@ -79,7 +79,7 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
                 color: Colors.grey[600],
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
 
             // Logo Upload Section
             Row(
@@ -91,9 +91,9 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Icon(Icons.add, color: Colors.grey),
+                  child: const Icon(Icons.add, color: Colors.grey),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -103,11 +103,11 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         primary: light_purple,
-                        minimumSize: Size(160, 40),
+                        minimumSize: const Size(160, 40),
                       ),
-                      child: Text('Upload business logo', style: TextStyle(color: Colors.white)),
+                      child: const Text('Upload business logo', style: TextStyle(color: Colors.white)),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     // OutlinedButton(
                     //   onPressed: () {
                     //     // Handle take photo action
@@ -123,7 +123,7 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Business Name TextField
             TextField(
@@ -133,10 +133,10 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Contact Number TextField
             TextField(
@@ -146,10 +146,10 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Address TextField
             TextField(
@@ -159,18 +159,18 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Business Type Dropdown
             DropdownButtonFormField<String>(
               value: selectedBusinessType,
               items: [
-                DropdownMenuItem(child: Text('Retail'), value: 'Retail'),
-                DropdownMenuItem(child: Text('Wholesale'), value: 'Wholesale'),
-                DropdownMenuItem(child: Text('Service'), value: 'Service'),
+                const DropdownMenuItem(child: Text('Retail'), value: 'Retail'),
+                const DropdownMenuItem(child: Text('Wholesale'), value: 'Wholesale'),
+                const DropdownMenuItem(child: Text('Service'), value: 'Service'),
               ],
               onChanged: (value) {
                 setState(() {
@@ -182,10 +182,10 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Business Description TextArea
             TextField(
@@ -196,10 +196,10 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               ),
             ),
-            Spacer(),
+            const Spacer(),
 
             // Disabled Login Button
             SizedBox(
@@ -210,23 +210,23 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
                   Business business = Business(uid: uuid.v1(), businessName: businessNameController.text, businessContactNumber: businessContactController.text, businessAddress: businessAddressController.text, businessType: selectedBusinessType!, businessDescription: businessDescriptionController.text, businessLogo: "...", people: [Person(user: authService.user!, role: "Owner")]);
                   print(business.toJson());
                   await crudService.createBusiness(business);
-                  Get.offAll(IntroOrElse());
+                  Get.offAll(const IntroOrElse());
                 }, // Disable the button initially
                 style: ElevatedButton.styleFrom(
                   primary: light_purple, // Disabled color
                   onPrimary: Colors.white, // Disabled text color
-                  minimumSize: Size(double.infinity, 50),
+                  minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Done',
                   style: TextStyle(fontSize: 18),
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
           ],
         ),
       ),

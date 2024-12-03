@@ -6,29 +6,25 @@ import '../../../services/authService.dart';
 import '../../../services/crudService.dart';
 import '../../../models/user.dart';
 import '../../conditions/introOrElse.dart';
-import 'regPage2.dart';
 
 class CreateAccountPage1 extends StatefulWidget {
   const CreateAccountPage1({super.key});
-
 
   @override
   State<CreateAccountPage1> createState() => _CreateAccountPage1State();
 }
 
 class _CreateAccountPage1State extends State<CreateAccountPage1> {
-
   TextEditingController contactNumber = TextEditingController();
   TextEditingController fullName = TextEditingController();
   TextEditingController email = TextEditingController();
-
 
   final AuthService authService = Get.put(AuthService());
   final CRUDService crudService = Get.put(CRUDService());
 
   @override
   void initState() {
-    if(authService.auth.currentUser!=null){
+    if (authService.auth.currentUser != null) {
       contactNumber.text = authService.auth.currentUser!.phoneNumber!;
     }
     super.initState();
@@ -42,7 +38,7 @@ class _CreateAccountPage1State extends State<CreateAccountPage1> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             // Handle back action
           },
@@ -53,10 +49,10 @@ class _CreateAccountPage1State extends State<CreateAccountPage1> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Title
-            Text(
+            const Text(
               'Create Account',
               style: TextStyle(
                 fontSize: 24,
@@ -64,7 +60,7 @@ class _CreateAccountPage1State extends State<CreateAccountPage1> {
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Subtitle
             Text(
@@ -74,7 +70,7 @@ class _CreateAccountPage1State extends State<CreateAccountPage1> {
                 color: Colors.grey[600],
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
 
             // Full Name TextField
             TextField(
@@ -83,12 +79,13 @@ class _CreateAccountPage1State extends State<CreateAccountPage1> {
                 hintText: 'Enter your Full Name',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.grey),
+                  borderSide: const BorderSide(color: Colors.grey),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Contact Number TextField
             // TextField(
@@ -111,12 +108,13 @@ class _CreateAccountPage1State extends State<CreateAccountPage1> {
                 hintText: 'Enter your Email Address',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.grey),
+                  borderSide: const BorderSide(color: Colors.grey),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Password TextField
             // TextField(
@@ -131,32 +129,37 @@ class _CreateAccountPage1State extends State<CreateAccountPage1> {
             //     contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             //   ),
             // ),
-            Spacer(),
+            const Spacer(),
 
             // Disabled Login Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () async{
+                onPressed: () async {
                   var uuid = const Uuid();
-                  User user = User(uid: uuid.v1(), fullName: fullName.text, contactNumber: authService.auth.currentUser!.phoneNumber!, emailAddress: email.text, profilePicture: "");
+                  User user = User(
+                      uid: uuid.v1(),
+                      fullName: fullName.text,
+                      contactNumber: authService.auth.currentUser!.phoneNumber!,
+                      emailAddress: email.text,
+                      profilePicture: "");
                   await crudService.createUser(user);
-                  Get.offAll(IntroOrElse());
+                  Get.offAll(const IntroOrElse());
                 },
                 style: ElevatedButton.styleFrom(
                   primary: light_purple,
-                  minimumSize: Size(double.infinity, 50),
+                  minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Next',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
           ],
         ),
       ),

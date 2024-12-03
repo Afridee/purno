@@ -28,7 +28,7 @@ class AccountState extends State<Account> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -68,7 +68,7 @@ class AccountState extends State<Account> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.purple, width: 1.5),
+                  borderSide: const BorderSide(color: Colors.purple, width: 1.5),
                 ),
               ),
             ),
@@ -78,7 +78,7 @@ class AccountState extends State<Account> {
               children: [
                 CircleAvatar(
                   radius: 40,
-                  backgroundImage: AssetImage('assets/images/dp.jpg'), // Replace with your asset path
+                  backgroundImage: const AssetImage('assets/images/dp.jpg'), // Replace with your asset path
                   backgroundColor: Colors.grey.shade200,
                 ),
                 const SizedBox(width: 16),
