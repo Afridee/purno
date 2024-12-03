@@ -73,6 +73,7 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   pin_code_fields:
+  uuid:
 
 dev_dependencies:
   flutter_test:

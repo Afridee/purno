@@ -1,15 +1,17 @@
 import 'package:purnomerchant/models/user.dart';
 
 class Business {
+  final String uid; // Unique identifier for the business
   final String businessName;
   final String businessContactNumber;
   final String businessAddress;
   final String businessType;
   final String businessDescription;
   final String businessLogo;
-  final List<Person> people;
+  final List<Person> people; // List of people (Person model) with their roles
 
   Business({
+    required this.uid,
     required this.businessName,
     required this.businessContactNumber,
     required this.businessAddress,
@@ -22,6 +24,7 @@ class Business {
   // Convert JSON to Business object
   factory Business.fromJson(Map<String, dynamic> json) {
     return Business(
+      uid: json['uid'], // Extract uid from JSON
       businessName: json['businessName'],
       businessContactNumber: json['businessContactNumber'],
       businessAddress: json['businessAddress'],
@@ -37,6 +40,7 @@ class Business {
   // Convert Business object to JSON
   Map<String, dynamic> toJson() {
     return {
+      'uid': uid, // Include uid in JSON
       'businessName': businessName,
       'businessContactNumber': businessContactNumber,
       'businessAddress': businessAddress,
@@ -47,7 +51,6 @@ class Business {
     };
   }
 }
-
 
 class Person {
   final User user;

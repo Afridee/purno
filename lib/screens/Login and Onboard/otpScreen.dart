@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:purnomerchant/screens/conditions/introOrElse.dart';
 import '../../constants/themecolors.dart';
 import '../../services/authService.dart';
 import 'createAccountandShopSetup/regPage1.dart';
-class OtpScreen extends StatelessWidget {
+class OtpScreen extends StatefulWidget {
   OtpScreen({super.key});
 
+  @override
+  State<OtpScreen> createState() => _OtpScreenState();
+}
+
+class _OtpScreenState extends State<OtpScreen> {
   final TextEditingController otpController = TextEditingController();
+
   final AuthService authService = Get.put(AuthService());
 
   @override
@@ -61,7 +68,9 @@ class OtpScreen extends StatelessWidget {
                         colorText: Colors.white,
                         duration: const Duration(seconds: 3),
                       );
-                      Get.to(() => CreateAccountPage1());
+
+                      Get.offAll(IntroOrElse());
+
                     } else {
                       Get.snackbar(
                         "Error",

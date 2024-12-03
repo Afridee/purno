@@ -1,8 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:purnomerchant/constants/themecolors.dart';
+import 'package:purnomerchant/models/business.dart';
+import 'package:uuid/uuid.dart';
 
+import '../../../services/authService.dart';
+import '../../../services/crudService.dart';
+import '../../Account and Setting/account.dart';
+import '../../Home.dart';
+import '../../conditions/introOrElse.dart';
 
-class ShopSetupPage extends StatelessWidget {
+class ShopSetupPage extends StatefulWidget {
+  @override
+  _ShopSetupPageState createState() => _ShopSetupPageState();
+}
+
+class _ShopSetupPageState extends State<ShopSetupPage> {
+  // Controllers for TextFields
+  final TextEditingController businessNameController = TextEditingController();
+  final TextEditingController businessContactController = TextEditingController();
+  final TextEditingController businessAddressController = TextEditingController();
+  final TextEditingController businessDescriptionController = TextEditingController();
+
+  // Variable to store selected business type
+  String? selectedBusinessType;
+
+  final AuthService authService = Get.put(AuthService());
+  final CRUDService crudService = Get.put(CRUDService());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,17 +108,17 @@ class ShopSetupPage extends StatelessWidget {
                       child: Text('Upload business logo', style: TextStyle(color: Colors.white)),
                     ),
                     SizedBox(height: 5),
-                    OutlinedButton(
-                      onPressed: () {
-                        // Handle take photo action
-                      },
-                      style: OutlinedButton.styleFrom(
-                        primary: Colors.purple,
-                        minimumSize: Size(160, 40),
-                        side: BorderSide(color: Colors.grey[300]!),
-                      ),
-                      child: Text('Take photo of logo'),
-                    ),
+                    // OutlinedButton(
+                    //   onPressed: () {
+                    //     // Handle take photo action
+                    //   },
+                    //   style: OutlinedButton.styleFrom(
+                    //     primary: Colors.purple,
+                    //     minimumSize: Size(160, 40),
+                    //     side: BorderSide(color: Colors.grey[300]!),
+                    //   ),
+                    //   child: Text('Take photo of logo'),
+                    // ),
                   ],
                 ),
               ],
@@ -102,6 +127,7 @@ class ShopSetupPage extends StatelessWidget {
 
             // Business Name TextField
             TextField(
+              controller: businessNameController,
               decoration: InputDecoration(
                 hintText: 'Business Name',
                 border: OutlineInputBorder(
@@ -114,6 +140,7 @@ class ShopSetupPage extends StatelessWidget {
 
             // Contact Number TextField
             TextField(
+              controller: businessContactController,
               decoration: InputDecoration(
                 hintText: 'Business Contact Number',
                 border: OutlineInputBorder(
@@ -124,47 +151,31 @@ class ShopSetupPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
 
-            // Address TextField with "Mark in map" Button
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Business Address',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                    ),
-                  ),
+            // Address TextField
+            TextField(
+              controller: businessAddressController,
+              decoration: InputDecoration(
+                hintText: 'Business Address',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle mark in map action
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.purple[50],
-                    minimumSize: Size(90, 50),
-                  ),
-                  child: Text(
-                    'Mark in map',
-                    style: TextStyle(color: Colors.purple),
-                  ),
-                ),
-              ],
+                contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              ),
             ),
             SizedBox(height: 20),
 
             // Business Type Dropdown
             DropdownButtonFormField<String>(
+              value: selectedBusinessType,
               items: [
                 DropdownMenuItem(child: Text('Retail'), value: 'Retail'),
                 DropdownMenuItem(child: Text('Wholesale'), value: 'Wholesale'),
                 DropdownMenuItem(child: Text('Service'), value: 'Service'),
               ],
               onChanged: (value) {
-                // Handle business type selection
+                setState(() {
+                  selectedBusinessType = value;
+                });
               },
               decoration: InputDecoration(
                 hintText: 'Select Business Type',
@@ -178,6 +189,7 @@ class ShopSetupPage extends StatelessWidget {
 
             // Business Description TextArea
             TextField(
+              controller: businessDescriptionController,
               maxLines: 3,
               decoration: InputDecoration(
                 hintText: 'Describe your business (Optional)',
@@ -193,17 +205,23 @@ class ShopSetupPage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: null, // Disable the button initially
+                onPressed: () async{
+                  var uuid = const Uuid();
+                  Business business = Business(uid: uuid.v1(), businessName: businessNameController.text, businessContactNumber: businessContactController.text, businessAddress: businessAddressController.text, businessType: selectedBusinessType!, businessDescription: businessDescriptionController.text, businessLogo: "...", people: [Person(user: authService.user!, role: "Owner")]);
+                  print(business.toJson());
+                  await crudService.createBusiness(business);
+                  Get.offAll(IntroOrElse());
+                }, // Disable the button initially
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.grey[300], // Disabled color
-                  onPrimary: Colors.grey[600], // Disabled text color
+                  primary: light_purple, // Disabled color
+                  onPrimary: Colors.white, // Disabled text color
                   minimumSize: Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 child: Text(
-                  'Login',
+                  'Done',
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -213,5 +231,15 @@ class ShopSetupPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Dispose controllers when the widget is removed from the widget tree
+    businessNameController.dispose();
+    businessContactController.dispose();
+    businessAddressController.dispose();
+    businessDescriptionController.dispose();
+    super.dispose();
   }
 }

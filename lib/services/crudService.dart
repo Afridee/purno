@@ -4,10 +4,59 @@ import 'package:get/get.dart';
 import '../models/product.dart'; // Replace with the actual path to your Product model
 import '../models/customer.dart'; // Replace with the actual path to your Customer model
 import '../models/customer_order.dart'; // Replace with the actual path to your CustomerOrder model
-import '../models/business.dart'; // Replace with the actual path to your Business model
+import '../models/business.dart';
+import '../models/user.dart'; // Replace with the actual path to your Business model
 
 class CRUDService extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  /// ===================== Create User =====================
+  Future<void> createUser(User user) async {
+    final docUser = _firestore.collection('users').doc(user.uid); // Use uid as document ID
+    await docUser.set(user.toJson());
+  }
+
+  /// ===================== Read User by UID =====================
+  Future<User?> fetchUserById(String uid) async {
+    final doc = await _firestore.collection('users').doc(uid).get();
+    if (doc.exists) {
+      return User.fromJson(doc.data() as Map<String, dynamic>);
+    } else {
+      return null; // Return null if user doesn't exist
+    }
+  }
+
+  /// ===================== Read All Users =====================
+  Future<List<User>> fetchAllUsers() async {
+    final querySnapshot = await _firestore.collection('users').get();
+    return querySnapshot.docs
+        .map((doc) => User.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
+  }
+
+  /// ===================== Fetch User by Phone Number =====================
+  Future<User?> fetchUserByPhoneNumber(String phoneNumber) async {
+    final querySnapshot = await _firestore
+        .collection('users')
+        .where('contactNumber', isEqualTo: phoneNumber)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      return User.fromJson(querySnapshot.docs.first.data() as Map<String, dynamic>);
+    } else {
+      return null; // Return null if no user is found
+    }
+  }
+
+  /// ===================== Update User =====================
+  Future<void> updateUser(String uid, Map<String, dynamic> updatedData) async {
+    await _firestore.collection('users').doc(uid).update(updatedData);
+  }
+
+  /// ===================== Delete User =====================
+  Future<void> deleteUser(String uid) async {
+    await _firestore.collection('users').doc(uid).delete();
+  }
 
   /// ===================== Products =====================
 
@@ -91,9 +140,8 @@ class CRUDService extends GetxController {
   /// ===================== Businesses =====================
 
   Future<void> createBusiness(Business business) async {
-    final doc = _firestore.collection('businesses').doc();
-    final businessId = doc.id;
-    await doc.set({'businessId': businessId, ...business.toJson()});
+    final docBusiness = _firestore.collection('businesses').doc(business.uid);
+    await docBusiness.set(business.toJson());
   }
 
   Future<List<Business>> fetchBusinesses() async {
@@ -101,6 +149,21 @@ class CRUDService extends GetxController {
     return querySnapshot.docs
         .map((doc) => Business.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
+  }
+
+  Future<List<Business>> fetchBusinessByUser(String userUid) async {
+    final querySnapshot = await _firestore.collection('businesses').get();
+
+    // Filter businesses where the user exists in the 'people' list
+    final businesses = querySnapshot.docs.where((doc) {
+      final businessData = doc.data() as Map<String, dynamic>;
+      final peopleList = businessData['people'] as List;
+
+      // Check if the 'people' list contains the user with the given UID
+      return peopleList.any((person) => person['user']['uid'] == userUid);
+    }).map((doc) => Business.fromJson(doc.data() as Map<String, dynamic>)).toList();
+
+    return businesses;
   }
 
   Future<Business?> fetchBusinessById(String businessId) async {

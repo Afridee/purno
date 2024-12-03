@@ -1,16 +1,44 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:purnomerchant/screens/Home.dart';
+import 'package:purnomerchant/screens/Login%20and%20Onboard/createAccountandShopSetup/regPage1.dart';
+import 'package:purnomerchant/screens/Login%20and%20Onboard/createAccountandShopSetup/regPage2.dart';
+import 'package:purnomerchant/screens/Login%20and%20Onboard/introPage.dart';
 import 'package:purnomerchant/screens/Login%20and%20Onboard/otpScreen.dart';
+import '../models/business.dart';
+import '../models/user.dart' as usermodel;
+import 'crudService.dart';
 
 class AuthService extends GetxController {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final CRUDService crudService = Get.put(CRUDService());
   String? _verificationId;
   bool isLoading = false;
   bool accountCreated = false;
+  usermodel.User? user;
+  List<Business> businesses = [];
 
-  void signOut(){
-    auth.signOut();
+  Future<void> getUsr() async{
+     isLoading =  true;
+     update();
+
+     user = await crudService.fetchUserByPhoneNumber(auth.currentUser!.phoneNumber!);
+     update();
+
+     isLoading =  false;
+     update();
+  }
+
+  Future<void> getUsersBusiness() async{
+    businesses = await crudService.fetchBusinessByUser(user!.uid!);
+    isLoading =  false;
+    update();
+  }
+
+  void signOut() async{
+    await auth.signOut();
+    user = null;
     update();
   }
 

@@ -1,10 +1,28 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:purnomerchant/constants/themecolors.dart';
 
 
+import '../../services/authService.dart';
 import 'loginScreen.dart';
 
-class IntroPage extends StatelessWidget {
+class IntroPage extends StatefulWidget {
+  @override
+  State<IntroPage> createState() => _IntroPageState();
+}
+
+
+class _IntroPageState extends State<IntroPage> {
+
+  final AuthService authService = Get.put(AuthService());
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
