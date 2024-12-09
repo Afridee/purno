@@ -44,124 +44,133 @@ class _CreateAccountPage1State extends State<CreateAccountPage1> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
+      body: GetBuilder<CRUDService>(
+        builder: (cs){
+          return crudService.isLoading ? Container(
+              color: Colors.white,
+              child: const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.purple,
+                  )))  : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
 
-            // Title
-            const Text(
-              'Create Account',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            // Subtitle
-            Text(
-              'Enter the details below to create an account for your business',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[600],
-              ),
-            ),
-            const SizedBox(height: 30),
-
-            // Full Name TextField
-            TextField(
-              controller: fullName,
-              decoration: InputDecoration(
-                hintText: 'Enter your Full Name',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.grey),
-                ),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Contact Number TextField
-            // TextField(
-            //   controller: contactNumber,
-            //   decoration: InputDecoration(
-            //     hintText: 'Enter your Contact Number',
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(10),
-            //       borderSide: BorderSide(color: Colors.grey),
-            //     ),
-            //     contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            //   ),
-            // ),
-            // SizedBox(height: 20),
-
-            // Email Address TextField
-            TextField(
-              controller: email,
-              decoration: InputDecoration(
-                hintText: 'Enter your Email Address',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.grey),
-                ),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Password TextField
-            // TextField(
-            //   obscureText: true,
-            //   decoration: InputDecoration(
-            //     hintText: 'Set Password',
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(10),
-            //       borderSide: BorderSide(color: Colors.grey),
-            //     ),
-            //     suffixIcon: Icon(Icons.visibility_off),
-            //     contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            //   ),
-            // ),
-            const Spacer(),
-
-            // Disabled Login Button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () async {
-                  var uuid = const Uuid();
-                  User user = User(
-                      uid: uuid.v1(),
-                      fullName: fullName.text,
-                      contactNumber: authService.auth.currentUser!.phoneNumber!,
-                      emailAddress: email.text,
-                      profilePicture: "");
-                  await crudService.createUser(user);
-                  Get.offAll(const IntroOrElse());
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: light_purple,
-                  minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                // Title
+                const Text(
+                  'Create Account',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
-                child: const Text(
-                  'Next',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                const SizedBox(height: 10),
+
+                // Subtitle
+                Text(
+                  'Enter the details below to create an account for your business',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                  ),
                 ),
-              ),
+                const SizedBox(height: 30),
+
+                // Full Name TextField
+                TextField(
+                  controller: fullName,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your Full Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Contact Number TextField
+                // TextField(
+                //   controller: contactNumber,
+                //   decoration: InputDecoration(
+                //     hintText: 'Enter your Contact Number',
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(10),
+                //       borderSide: BorderSide(color: Colors.grey),
+                //     ),
+                //     contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                //   ),
+                // ),
+                // SizedBox(height: 20),
+
+                // Email Address TextField
+                TextField(
+                  controller: email,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your Email Address',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Password TextField
+                // TextField(
+                //   obscureText: true,
+                //   decoration: InputDecoration(
+                //     hintText: 'Set Password',
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(10),
+                //       borderSide: BorderSide(color: Colors.grey),
+                //     ),
+                //     suffixIcon: Icon(Icons.visibility_off),
+                //     contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                //   ),
+                // ),
+                const Spacer(),
+
+                // Disabled Login Button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      var uuid = const Uuid();
+                      User user = User(
+                          uid: uuid.v1(),
+                          fullName: fullName.text,
+                          contactNumber: authService.auth.currentUser!.phoneNumber!,
+                          emailAddress: email.text,
+                          profilePicture: "");
+                      await crudService.createUser(user);
+                      Get.offAll(const IntroOrElse());
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: light_purple,
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      'Next',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+              ],
             ),
-            const SizedBox(height: 40),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

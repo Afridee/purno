@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../models/product.dart'; // Replace with the actual path to your Product model
@@ -9,11 +10,29 @@ import '../models/user.dart'; // Replace with the actual path to your Business m
 
 class CRUDService extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  bool isLoading = false;
 
   /// ===================== Create User =====================
   Future<void> createUser(User user) async {
-    final docUser = _firestore.collection('users').doc(user.uid); // Use uid as document ID
-    await docUser.set(user.toJson());
+    isLoading = true;
+    update();
+
+    try{
+      final docUser = _firestore.collection('users').doc(user.uid); // Use uid as document ID
+      await docUser.set(user.toJson());
+    }catch(e){
+      Get.snackbar(
+        "Oops!",
+        "Something went wrong!",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
+    }
+
+    isLoading = true;
+    update();
   }
 
   /// ===================== Read User by UID =====================
@@ -140,8 +159,26 @@ class CRUDService extends GetxController {
   /// ===================== Businesses =====================
 
   Future<void> createBusiness(Business business) async {
-    final docBusiness = _firestore.collection('businesses').doc(business.uid);
-    await docBusiness.set(business.toJson());
+
+   isLoading = true;
+   update();
+
+   try{
+     final docBusiness = _firestore.collection('businesses').doc(business.uid);
+     await docBusiness.set(business.toJson());
+   }catch(e){
+     Get.snackbar(
+       "Oops!",
+       "Something went wrong!",
+       snackPosition: SnackPosition.BOTTOM,
+       backgroundColor: Colors.redAccent,
+       colorText: Colors.white,
+       duration: const Duration(seconds: 3),
+     );
+   }
+
+   isLoading = false;
+   update();
   }
 
   Future<List<Business>> fetchBusinesses() async {

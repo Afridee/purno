@@ -7,7 +7,7 @@ class Business {
   final String businessAddress;
   final String businessType;
   final String businessDescription;
-  final String businessLogo;
+  final String? businessLogo;
   final List<Person> people; // List of people (Person model) with their roles
 
   Business({

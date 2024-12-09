@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:purnomerchant/screens/Home.dart';
 import 'package:purnomerchant/screens/Login%20and%20Onboard/createAccountandShopSetup/regPage1.dart';
 import 'package:purnomerchant/screens/Login%20and%20Onboard/createAccountandShopSetup/regPage2.dart';
 import 'package:purnomerchant/screens/Login%20and%20Onboard/introPage.dart';

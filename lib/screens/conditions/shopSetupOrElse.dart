@@ -5,9 +5,9 @@ import 'package:purnomerchant/screens/Login%20and%20Onboard/introPage.dart';
 import '../../constants/themecolors.dart';
 import '../../services/authService.dart';
 import '../Account and Setting/account.dart';
-import '../Home.dart';
 import '../Login and Onboard/createAccountandShopSetup/regPage1.dart';
 import '../Login and Onboard/createAccountandShopSetup/regPage2.dart';
+import '../Products/homepage.dart';
 
 class ShopSetupOrElse extends StatefulWidget {
   const ShopSetupOrElse({Key? key}) : super(key: key);
