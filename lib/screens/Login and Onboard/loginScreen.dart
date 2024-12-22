@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     // Subtitle
                     Text(
-                      'It is quick and easy to log in. Enter your email and password below.',
+                      'It is quick and easy to log in. Enter your phone number below.',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[600],
@@ -91,8 +91,10 @@ class _LoginPageState extends State<LoginPage> {
                       onChanged: (value) {
                         toggleButtonState(); // Enable the button when text is entered
                       },
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        hintText: 'Enter your Phone Number',
+                        prefix: Text("+880"),
+                        hintText: '',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(color: Colors.grey),
@@ -148,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: isButtonEnabled
                             ? () {
                                 authService.sendOtp(
-                                    phoneNumber: phoneNumberController.text);
+                                    phoneNumber: "+880${phoneNumberController.text}");
                               }
                             : null, // Disable the button if not enabled
                         style: ElevatedButton.styleFrom(

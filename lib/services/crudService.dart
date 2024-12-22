@@ -103,9 +103,35 @@ class CRUDService extends GetxController {
   /// ===================== Customers =====================
 
   Future<void> createCustomer(Customer customer) async {
-    final doc = _firestore.collection('customers').doc();
-    final customerId = doc.id;
-    await doc.set({'customerId': customerId, ...customer.toJson()});
+
+    isLoading = true;
+    update();
+
+    try {
+      final doc = _firestore.collection('customers').doc();
+      final customerId = doc.id;
+      await doc.set({'customerId': customerId, ...customer.toJson()});
+      Get.snackbar(
+        "Oops!",
+        "Customer created!",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Oops!",
+        "Something went wrong!",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
+    }
+
+    isLoading = false;
+    update();
   }
 
   Future<List<Customer>> fetchCustomers() async {
@@ -126,9 +152,35 @@ class CRUDService extends GetxController {
   /// ===================== Customer Orders =====================
 
   Future<void> createCustomerOrder(CustomerOrder order) async {
-    final doc = _firestore.collection('orders').doc();
-    final orderId = doc.id;
-    await doc.set({'orderId': orderId, ...order.toJson()});
+
+    isLoading = true;
+    update();
+
+    try {
+      final doc = _firestore.collection('orders').doc();
+      final orderId = doc.id;
+      await doc.set({'orderId': orderId, ...order.toJson()});
+      Get.snackbar(
+        "Success!",
+        "Order placed successfully!!",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Oops!",
+        "Something went wrong!",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
+    }
+
+    isLoading = false;
+    update();
   }
 
   Future<List<CustomerOrder>> fetchCustomerOrders() async {

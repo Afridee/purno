@@ -1,7 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:purnomerchant/constants/themecolors.dart';
+import 'package:purnomerchant/models/customer_order.dart';
 import '../../models/product.dart';
+import '../../services/cartService.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -16,6 +19,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,12 +61,13 @@ class _HomeState extends State<Home> {
 }
 
 class ProductCard extends StatelessWidget {
-  final Product product;
 
+  final Product product;
   ProductCard({required this.product});
 
   @override
   Widget build(BuildContext context) {
+    final CartService cartService = Get.put(CartService());
     return Card(
       color: Colors.white,
       elevation: 10, // Adds a more prominent shadow
@@ -117,7 +122,17 @@ class ProductCard extends StatelessWidget {
 
                   // Add to Cart Button
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      cartService.addToCart(product: OrderProduct(productName: product.productName, category: product.category, price: product.price, quantity: 1, unitType: product.unitType, productImage: product.productImage));
+                      Get.snackbar(
+                        "Added to cart",
+                        "...",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: light_purple,
+                        colorText: Colors.white,
+                        duration: const Duration(seconds: 3),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: light_purple, // Button color
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

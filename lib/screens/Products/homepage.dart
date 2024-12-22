@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:purnomerchant/constants/themecolors.dart';
 import 'package:purnomerchant/screens/Account%20and%20Setting/setting.dart';
 import 'package:purnomerchant/screens/Cart/Cart.dart';
+import 'package:purnomerchant/screens/Customers/customers.dart';
 import '../../models/product.dart';
 import '../../services/authService.dart';
+import '../../services/cartService.dart';
 import '../../widgets/navDrawer.dart';
 import '../Account and Setting/account.dart';
 import '../Inventory/products.dart';
@@ -31,8 +33,9 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
       stock: 50.0,
       unitType: 'pieces',
       description: 'Imported Russian Diet Coke in a can.',
-      productImage: 'https://via.placeholder.com/150?text=Diet+Coke',
+      productImage: 'https://firebasestorage.googleapis.com/v0/b/purno-7e189.firebasestorage.app/o/Screenshot%202024-12-22%20at%2010.56.11%E2%80%AFPM.png?alt=media&token=533662df-b19d-4d98-8f16-e8a530812f68',
       category: 'Beverages',
+      businessID: ""
     ),
     Product(
       productName: 'Deshi Shagor Bananas',
@@ -42,8 +45,9 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
       stock: 100.0,
       unitType: 'kg',
       description: 'Fresh and ripe Deshi Shagor Bananas.',
-      productImage: 'https://via.placeholder.com/150?text=Bananas',
+      productImage: 'https://firebasestorage.googleapis.com/v0/b/purno-7e189.firebasestorage.app/o/Screenshot%202024-12-22%20at%2010.56.11%E2%80%AFPM.png?alt=media&token=533662df-b19d-4d98-8f16-e8a530812f68',
       category: 'Fruits & Vegetables',
+        businessID: ""
     ),
     Product(
       productName: 'Imported Organic Swedish Apples',
@@ -53,8 +57,9 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
       stock: 30.0,
       unitType: 'kg',
       description: 'Fresh organic Swedish apples.',
-      productImage: 'https://via.placeholder.com/150?text=Apples',
+      productImage: 'https://firebasestorage.googleapis.com/v0/b/purno-7e189.firebasestorage.app/o/Screenshot%202024-12-22%20at%2010.56.11%E2%80%AFPM.png?alt=media&token=533662df-b19d-4d98-8f16-e8a530812f68',
       category: 'Fruits & Vegetables',
+        businessID: ""
     ),
     Product(
       productName: 'Walton HS-15 Professional Juicer',
@@ -64,8 +69,9 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
       stock: 20.0,
       unitType: 'pieces',
       description: 'Professional juicer with multiple speed settings.',
-      productImage: 'https://via.placeholder.com/150?text=Juicer',
+      productImage: 'https://firebasestorage.googleapis.com/v0/b/purno-7e189.firebasestorage.app/o/Screenshot%202024-12-22%20at%2010.56.11%E2%80%AFPM.png?alt=media&token=533662df-b19d-4d98-8f16-e8a530812f68',
       category: 'Electronics',
+        businessID: ""
     ),
     Product(
       productName: 'Red Grapes',
@@ -75,8 +81,9 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
       stock: 75.0,
       unitType: 'kg',
       description: 'Fresh and sweet red grapes.',
-      productImage: 'https://via.placeholder.com/150?text=Red+Grapes',
+      productImage: 'https://firebasestorage.googleapis.com/v0/b/purno-7e189.firebasestorage.app/o/Screenshot%202024-12-22%20at%2010.56.11%E2%80%AFPM.png?alt=media&token=533662df-b19d-4d98-8f16-e8a530812f68',
       category: 'Fruits & Vegetables',
+        businessID: ""
     ),
     Product(
       productName: 'Malaysian Oranges',
@@ -86,8 +93,9 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
       stock: 60.0,
       unitType: 'kg',
       description: 'Juicy and sweet Malaysian oranges.',
-      productImage: 'https://via.placeholder.com/150?text=Oranges',
+      productImage: 'https://firebasestorage.googleapis.com/v0/b/purno-7e189.firebasestorage.app/o/Screenshot%202024-12-22%20at%2010.56.11%E2%80%AFPM.png?alt=media&token=533662df-b19d-4d98-8f16-e8a530812f68',
       category: 'Fruits & Vegetables',
+        businessID: ""
     ),
   ];
 
@@ -190,7 +198,7 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
                       leading: const Icon(Icons.person),
                       title: const Text('Customers'),
                       onTap: () {
-                        // Handle navigation for Customers
+                        Get.to(CustomersPage());
                       },
                     ),
                     // Drawer Item 4

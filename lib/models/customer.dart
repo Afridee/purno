@@ -3,12 +3,14 @@ class Customer {
   final String contactNumber;
   final String? email; // Optional email field
   final String customerType; // e.g., Regular, VIP, Wholesale
+  final String businessID;
 
   Customer({
     required this.name,
     required this.contactNumber,
     this.email,
     required this.customerType,
+    required this.businessID
   });
 
   // Convert JSON to Customer object
@@ -18,6 +20,7 @@ class Customer {
       contactNumber: json['contactNumber'],
       email: json['email'], // This can be null
       customerType: json['customerType'],
+      businessID: json['businessID']
     );
   }
 
@@ -28,6 +31,7 @@ class Customer {
       'contactNumber': contactNumber,
       'email': email, // Can be null
       'customerType': customerType,
+      'businessID' : businessID
     };
   }
 }

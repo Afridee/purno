@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:purnomerchant/screens/Account%20and%20Setting/setting.dart';
-import 'package:purnomerchant/screens/Cart/Cart.dart';
-import 'package:purnomerchant/screens/Inventory/products.dart';
-import 'package:purnomerchant/screens/Login%20and%20Onboard/introPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:purnomerchant/screens/conditions/introOrElse.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -42,3 +38,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+///https://www.figma.com/design/tNeKMo5FhXAMhj2QsThdjJ/Purno-UX?node-id=1-10558&t=Mc6BTMLd5QfDS64v-1

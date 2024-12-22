@@ -18,6 +18,7 @@ class CustomerOrder {
   final double discount;
   final double transactionFee;
   final double netPayable;
+  final String businessID;
 
   CustomerOrder({
     required this.orderId,
@@ -37,6 +38,7 @@ class CustomerOrder {
     required this.discount,
     required this.transactionFee,
     required this.netPayable,
+    required this.businessID
   });
 
   // Convert JSON to Order object
@@ -63,6 +65,7 @@ class CustomerOrder {
       discount: json['discount'].toDouble(),
       transactionFee: json['transactionFee'].toDouble(),
       netPayable: json['netPayable'].toDouble(),
+      businessID: json['businessID']
     );
   }
 
@@ -86,6 +89,7 @@ class CustomerOrder {
       'discount': discount,
       'transactionFee': transactionFee,
       'netPayable': netPayable,
+      'businessID' : businessID
     };
   }
 }
@@ -95,8 +99,9 @@ class OrderProduct {
   final String productName;
   final String category; // e.g., "Fruits & Vegetables"
   final double price;
-  final double quantity; // In kg or pieces
+  double quantity; // In kg or pieces
   final String unitType; // "kg" or "pieces"
+  final String productImage;
 
   OrderProduct({
     required this.productName,
@@ -104,6 +109,7 @@ class OrderProduct {
     required this.price,
     required this.quantity,
     required this.unitType,
+    required this.productImage
   });
 
   // Convert JSON to OrderProduct object
@@ -114,6 +120,7 @@ class OrderProduct {
       price: json['price'].toDouble(),
       quantity: json['quantity'].toDouble(),
       unitType: json['unitType'],
+      productImage: json['productImage'] ?? '',
     );
   }
 
@@ -126,6 +133,7 @@ class OrderProduct {
       'price': price,
       'quantity': quantity,
       'unitType': unitType,
+      'productImage': productImage,
     };
   }
 }
