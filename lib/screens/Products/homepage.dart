@@ -10,6 +10,7 @@ import '../../services/cartService.dart';
 import '../../widgets/navDrawer.dart';
 import '../Account and Setting/account.dart';
 import '../Inventory/products.dart';
+import '../Orders/orders.dart';
 import 'hometab.dart';
 
 class HomePage extends StatefulWidget {
@@ -109,7 +110,7 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
   Widget build(BuildContext context) {
     List<Widget> _children = [
       Home(productList: productList),
-      OrdersScreen(),
+      Orders(),
       ScanScreen(),
       MoreScreen(),
     ];
@@ -183,14 +184,6 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
                       title: const Text('Inventory'),
                       onTap: () {
                         Get.to(InventoryProducts());
-                      },
-                    ),
-                    // Drawer Item 2
-                    ListTile(
-                      leading: const Icon(Icons.assignment),
-                      title: const Text('Orders'),
-                      onTap: () {
-                        // Handle navigation for Orders
                       },
                     ),
                     // Drawer Item 3

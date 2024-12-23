@@ -91,7 +91,7 @@ class _CustomersPageState extends State<CustomersPage> {
                     SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
-                        // Handle "Add a customer" action
+                        Get.to(AddCustomerPage());
                       },
                       style: ElevatedButton.styleFrom(primary: Colors.purple),
                       child: Text('Add a customer', style: TextStyle(color: Colors.white)),

@@ -3,12 +3,14 @@ import 'package:uuid/uuid.dart';
 import '../models/customer.dart'; // Replace with the actual path to your Customer model
 import '../models/customer_order.dart';
 import 'authService.dart';
-import 'crudService.dart'; // Replace with the actual path to your CustomerOrder model
+import 'crudService.dart';
+import 'ordersService.dart'; // Replace with the actual path to your CustomerOrder model
 
 
 class CartService extends GetxController {
   final CRUDService crudService = Get.put(CRUDService());
   final AuthService authService = Get.put(AuthService());
+  final OrderService orderService = Get.put(OrderService());
   List<OrderProduct> products = [];
   Customer? selectedCustomer;
   bool isLoading = false;
@@ -65,6 +67,7 @@ class CartService extends GetxController {
     CustomerOrder order = CustomerOrder(orderId: uuid.v1(), totalAmount: totalPrice, status: "Active", customer: selectedCustomer!, paymentMethod: "", cardDetails: "", cardNetwork: "", posMachineUsed: "", fulfillmentType: "", fulfilledBy: authService.user!.fullName, orderPlacedAt: DateTime.now(), products: products, discount: 0, transactionFee: 0, netPayable: totalPrice, businessID: authService.businesses.first.uid);
     await crudService.createCustomerOrder(order);
     clearCart();
+    orderService.fetchOrders();
 
     isLoading = false;
     update();
