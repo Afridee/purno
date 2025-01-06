@@ -404,7 +404,7 @@ class _CartState extends State<Cart> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade800,
+                      backgroundColor: light_purple,
                       minimumSize: const Size(double.infinity, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),

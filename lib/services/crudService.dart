@@ -82,11 +82,12 @@ class CRUDService extends GetxController {
   Future<void> createProduct(Product product) async {
     final doc = _firestore.collection('products').doc();
     final productId = doc.id;
-    await doc.set({'productId': productId, ...product.toJson()});
+    product.productId = productId;
+    await doc.set(product.toJson());
   }
 
-  Future<List<Product>> fetchProducts() async {
-    final querySnapshot = await _firestore.collection('products').get();
+  Future<List<Product>> fetchProducts({required String yourBusinessId}) async {
+    final querySnapshot = await _firestore.collection('products').where('businessID', isEqualTo: yourBusinessId).get();
     return querySnapshot.docs
         .map((doc) => Product.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
@@ -134,8 +135,11 @@ class CRUDService extends GetxController {
     update();
   }
 
-  Future<List<Customer>> fetchCustomers() async {
-    final querySnapshot = await _firestore.collection('customers').get();
+  Future<List<Customer>> fetchCustomers({required String yourBusinessId}) async {
+    final querySnapshot = await _firestore
+        .collection('customers')
+        .where('businessID', isEqualTo: '$yourBusinessId')
+        .get();
     return querySnapshot.docs
         .map((doc) => Customer.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
@@ -183,8 +187,8 @@ class CRUDService extends GetxController {
     update();
   }
 
-  Future<List<CustomerOrder>> fetchCustomerOrders() async {
-    final querySnapshot = await _firestore.collection('orders').get();
+  Future<List<CustomerOrder>> fetchCustomerOrders({required String yourBusinessId}) async {
+    final querySnapshot = await _firestore.collection('orders').where('businessID', isEqualTo: yourBusinessId).get();
     return querySnapshot.docs
         .map((doc) => CustomerOrder.fromJson(doc.data() as Map<String, dynamic>))
         .toList();

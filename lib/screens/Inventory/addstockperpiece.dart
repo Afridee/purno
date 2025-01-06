@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../models/product.dart';
+
 class AddStockPerPrice extends StatefulWidget {
+
+  final Product product;
+
+  const AddStockPerPrice({super.key, required this.product});
+
   @override
   _AddStockPerPriceState createState() => _AddStockPerPriceState();
 }
 
 class _AddStockPerPriceState extends State<AddStockPerPrice> {
+
+  @override
+  void initState() {
+    print(widget.product.toJson());
+    super.initState();
+  }
+
   int stock = 50; // Initial stock value
 
   void addStock(int value) {
@@ -29,7 +43,7 @@ class _AddStockPerPriceState extends State<AddStockPerPrice> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         title: Text(
-          'Inventory',
+          'Add stock per piece',
           style: GoogleFonts.roboto(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -42,12 +56,12 @@ class _AddStockPerPriceState extends State<AddStockPerPrice> {
           },
         ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {
-              // Additional options
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.more_vert),
+          //   onPressed: () {
+          //     // Additional options
+          //   },
+          // ),
         ],
       ),
       body: Padding(
@@ -59,20 +73,20 @@ class _AddStockPerPriceState extends State<AddStockPerPrice> {
             Center(
               child: Column(
                 children: [
-                  Image.asset(
-                    'assets/images/lays_demo.png', // Replace with your image asset path
+                  Image.network(
+                    widget.product.productImage, // Replace with your image asset path
                     height: 100,
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    "Lay's Salt and Pepper",
+                    widget.product.productName,
                     style: GoogleFonts.roboto(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
                   Text(
-                    'Snacks',
+                    widget.product.category,
                     style: GoogleFonts.roboto(
                       fontSize: 14,
                       color: Colors.grey.shade600,
@@ -80,7 +94,7 @@ class _AddStockPerPriceState extends State<AddStockPerPrice> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Crispy and tangy flavour of salt and pepper at every bite. Now, includes an extra 10g',
+                    widget.product.description,
                     style: GoogleFonts.roboto(
                       fontSize: 14,
                       color: Colors.grey.shade700,
@@ -97,38 +111,37 @@ class _AddStockPerPriceState extends State<AddStockPerPrice> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Divider(color: Colors.grey.shade300),
-                _buildDetailRow('Price', '৳100 per kg'),
-                _buildDetailRow('Brand', "Lay's"),
-                _buildDetailRow('SKU', '35001202'),
-                _buildDetailRow('GTIN', '20221202'),
-                _buildDetailRow('Stock', '$stock kg'),
+                _buildDetailRow('Price', '${widget.product.price}'),
+                _buildDetailRow('SKU', widget.product.sku),
+                _buildDetailRow('GTIN', widget.product.gtn),
+                _buildDetailRow('Stock', '${widget.product.stock}'),
                 Divider(color: Colors.grey.shade300),
               ],
             ),
             const SizedBox(height: 12),
             // Edit Product Button
-            Center(
-              child: TextButton(
-                onPressed: () {
-                  // Edit product action
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.purple.shade50,
-                  minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Text(
-                  'Edit product',
-                  style: GoogleFonts.roboto(
-                    fontSize: 16,
-                    color: Colors.purple,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
+            // Center(
+            //   child: TextButton(
+            //     onPressed: () {
+            //       // Edit product action
+            //     },
+            //     style: TextButton.styleFrom(
+            //       backgroundColor: Colors.purple.shade50,
+            //       minimumSize: const Size(double.infinity, 50),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //     ),
+            //     child: Text(
+            //       'Edit product',
+            //       style: GoogleFonts.roboto(
+            //         fontSize: 16,
+            //         color: Colors.purple,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 24),
             // Add Stock Section
             Text(

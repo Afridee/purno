@@ -1,29 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:purnomerchant/constants/themecolors.dart';
-import 'package:purnomerchant/screens/Account%20and%20Setting/setting.dart';
-import 'package:purnomerchant/screens/Cart/Cart.dart';
-import 'package:purnomerchant/screens/Customers/customers.dart';
-import '../../models/product.dart';
-import '../../services/authService.dart';
-import '../../services/cartService.dart';
-import '../../widgets/navDrawer.dart';
-import '../Account and Setting/account.dart';
-import '../Inventory/products.dart';
-import '../Orders/orders.dart';
-import 'hometab.dart';
+import 'package:purnomerchant/services/storageService.dart';
+import '../models/customer.dart'; // Replace with the actual path to your Customer model
+import '../models/product.dart';
+import 'authService.dart';
+import 'crudService.dart'; // Replace with the actual path to your CustomerOrder model
 
-class HomePage extends StatefulWidget {
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
 
-class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixin{
-
-  late TabController _tabController;
-  int _currentIndex = 0; // Track the selected index for the bottom navigation
+class InventoryService extends GetxController {
+  final CRUDService crudService = Get.put(CRUDService());
   final AuthService authService = Get.put(AuthService());
-  // List of items for bottom navigation bar
+  final StorageService storageService = Get.put(StorageService());
+
+  List<Customer> customers = [];
+  bool isLoading = false;
 
   List<Product> productList = [
     Product(
@@ -196,185 +188,55 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
     ),
   ];
 
-
-  @override
-  void initState() {
-    _tabController = TabController(length: 3, vsync: this); // 3 tabs
-    super.initState();
+  fetchProducts() async{
+    productList = await crudService.fetchProducts(yourBusinessId: authService.businesses.first.uid);
+    update();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> _children = [
-      Home(productList: productList),
-      Orders(),
-      ScanScreen(),
-      MoreScreen(),
-    ];
+  addProduct(Product product, File img) async{
 
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          title: const Text('Home', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-          bottom: _currentIndex==0? TabBar(
-            controller: _tabController,
-            indicatorColor: Colors.purple, // Highlight color for selected tab
-            indicatorWeight: 3.0, // Make the indicator thicker
-            labelColor: Colors.purple, // Text color for selected tab
-            unselectedLabelColor: Colors.grey, // Text color for unselected tabs
-            tabs: const [
-              Tab(text: 'Products'),
-              Tab(text: 'Categories'),
-              Tab(text: 'Keypad'),
-            ],
-          ) : null,
-          actions: [
-            IconButton(onPressed: (){
-              Get.to(Cart());
-            }, icon: const Icon(Icons.shopping_cart, color: light_purple))
-          ],
-        ),
-        drawer: Drawer(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Drawer Header
-              UserAccountsDrawerHeader(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                accountName: Container(
-                  width: 200,
-                  child: Text(
-                    authService.user!.fullName,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.purple,
-                    ),
-                  ),
-                ),
-                accountEmail: Text(authService.user!.emailAddress, style: const TextStyle(color: Colors.grey)), // You can add email here if needed
-                currentAccountPicture: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.purple,
-                    child: Text(
-                      authService.user!.fullName[0], // Your app's logo or a character
-                      style: const TextStyle(
-                        fontSize: 28,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              // Drawer Body
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: <Widget>[
-                    // Drawer Item 1
-                    ListTile(
-                      leading: const Icon(Icons.store),
-                      title: const Text('Inventory'),
-                      onTap: () {
-                        Get.to(InventoryProducts());
-                      },
-                    ),
-                    // Drawer Item 3
-                    ListTile(
-                      leading: const Icon(Icons.person),
-                      title: const Text('Customers'),
-                      onTap: () {
-                        Get.to(CustomersPage());
-                      },
-                    ),
-                    // Drawer Item 4
-                    ListTile(
-                      leading: const Icon(Icons.help),
-                      title: const Text('Support'),
-                      onTap: () {
-                        // Handle navigation for Support
-                      },
-                    ),
-                    // Drawer Item 5
-                    ListTile(
-                      leading: const Icon(Icons.account_circle),
-                      title: const Text('Account'),
-                      onTap: () {
-                        Get.to(Account());
-                      },
-                    ),
-                    // Drawer Item 6
-                    ListTile(
-                      leading: const Icon(Icons.settings),
-                      title: const Text('Settings'),
-                      onTap: () {
-                        Get.to(Settings());
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        body: _children[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index; // Update the selected index
-          });
-        },
-        selectedItemColor: Colors.purple, // Color for selected icon
-        unselectedItemColor: Colors.grey, // Color for unselected icons
-        showUnselectedLabels: true, // Display labels for unselected items
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: 'Orders',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.center_focus_strong), // Scan icon
-            label: 'Scan',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
-          ),
-        ],
-      ),
-    );
+    isLoading = true;
+    update();
+
+    String? fileURL =  await storageService.uploadImageAndGetURL(img);
+
+    if(fileURL!=null){
+      product.productImage = fileURL;
+      try {
+        await crudService.createProduct(product);
+        Get.snackbar(
+                "Success!",
+                "Product added successfully!",
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.green,
+                colorText: Colors.white,
+                duration: const Duration(seconds: 3),
+              );
+        fetchProducts();
+      } catch (e) {
+        Get.snackbar(
+          "Error!",
+          "while adding product to inventory",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
+      }
+    }else{
+      Get.snackbar(
+        "Error!",
+        "while adding product to inventory",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
+    }
+
+    isLoading = false;
+    update();
   }
-}
 
 
-// Sample screens for navigation (you can replace these with your actual screens
-
-class OrdersScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Orders Screen'));
-  }
-}
-
-class ScanScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Icon(Icons.qr_code_scanner, size: 100, color: Colors.purple));
-  }
-}
-
-class MoreScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('More Screen'));
-  }
 }

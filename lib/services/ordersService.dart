@@ -11,7 +11,7 @@ class OrderService extends GetxController {
   List<CustomerOrder> orders = [];
 
   fetchOrders() async{
-    orders = await crudService.fetchCustomerOrders();
+    orders = await crudService.fetchCustomerOrders(yourBusinessId: authService.businesses.first.uid);
     print(orders);
     update();
   }

@@ -6,9 +6,11 @@ class Product {
   final double stock; // Assuming stock is measured in kg or pieces
   final String unitType; // "kg" or "pieces"
   final String description;
-  final String productImage;
+  String productImage;
+  String? productId;
   final String category; // e.g., "Fruits & Vegetables", "Snacks"
   final String? businessID;
+  final List<dynamic> options;
 
   Product(
       {required this.productName,
@@ -20,7 +22,10 @@ class Product {
       required this.description,
       required this.productImage,
       required this.category,
-      required this.businessID});
+      required this.businessID,
+        required this.options,
+        this.productId
+      });
 
   // Convert JSON to Product object
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -36,7 +41,10 @@ class Product {
         productImage:
             json['productImage'] ?? '', // Default to empty string if null
         category: json['category'], // New field for product category
-        businessID: json['businessID']);
+        businessID: json['businessID'],
+        options: json['options'],
+        productId: json['productId']
+    );
   }
 
   // Convert Product object to JSON
@@ -51,7 +59,9 @@ class Product {
       'description': description,
       'productImage': productImage,
       'category': category,
-      'businessID' : businessID
+      'businessID' : businessID,
+      'options' : options,
+      'productId' : productId
     };
   }
 }
